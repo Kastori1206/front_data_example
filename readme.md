@@ -13,5 +13,5 @@ npm i express
 
 ```
 cd /client
-npx create-react-app
+npx create-react-app .
 ```
