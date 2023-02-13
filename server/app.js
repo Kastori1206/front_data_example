@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+let id = 2;
 const todoList = [
   {
     id: 1,
@@ -10,17 +15,19 @@ const todoList = [
 ];
 
 app.get("/api/todo", (req, res) => {
-  return todoList;
+  res.json(todoList);
 });
 
 app.post("/api/todo", (req, res) => {
+  console.log("들어왔니", req.body);
   const { text, done } = req.body;
   todoList.push({
     id: id++,
     text,
     done,
   });
+  return res.send("success");
 });
-app.listen(3000, () => {
+app.listen(4000, () => {
   console.log("server start!!");
 });

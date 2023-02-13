@@ -15,3 +15,5 @@ npm i express
 cd /client
 npx create-react-app .
 ```
+
+react-query 라이브러리
