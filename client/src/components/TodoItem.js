@@ -1,20 +1,22 @@
-import { CheckIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 const style = {
   li: `flex justify-between bg-slate-200 p-4 my-2 capitalize`,
   liComplete: `flex justify-between bg-slate-400 p-4 my-2 capitalize`,
   row: `flex`,
-  text: `ml-2 cursor-pointer`,
+  text: `ml-2 cursor-pointer bg-slate-200 capitalize disable`,
   textComplete: `ml-2 cursor-pointer line-through`,
   button: `cursor-pointer flex items-center`,
 };
-function TodoItem({ todo, deleteTodo }) {
+function TodoItem({ todo, deleteTodo, updateTodo }) {
   const [isChecked, setIsChecked] = useState(todo.done);
 
   const handleCheckboxChange = (e) => {
+    updateTodo({ id: todo.id, text: todo.text, done: !isChecked });
     setIsChecked(!isChecked);
   };
+
   return (
     <div>
       <li className={todo.done ? style.liComplete : style.li}>
@@ -26,14 +28,14 @@ function TodoItem({ todo, deleteTodo }) {
             id={todo.id}
             onChange={handleCheckboxChange}
           />
-          <label htmlFor={todo.id} className={style.text}>
+          <p
+            onClick={() => handleCheckboxChange(todo)}
+            className={isChecked ? style.textComplete : style.text}
+          >
             {todo.text}
-          </label>
+          </p>
         </div>
         <div className="flex flex-row gap-3">
-          <button aria-label={`Update ${todo.text} Task`}>
-            <PencilIcon width={24} height={24} />
-          </button>
           <button
             aria-label={`Delete ${todo.text} Task`}
             onClick={() => deleteTodo(todo.id)}
